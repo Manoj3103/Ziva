@@ -1,118 +1,89 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import { TouchableOpacity , View, StyleSheet, Text, SafeAreaView, } from 'react-native';
+import { appleAuth } from '@invertase/react-native-apple-authentication';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+const App = () => {
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
 
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.background}>
+        <Text style={styles.text}>MONGROV</Text>
+        <TouchableOpacity style={styles.whiteButton} onPress={() => onAppleButtonPress()}>
+          <Text style={styles.whiteButtonText}>Continue with Apple</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.darkButton} onPress={() => onAppleButtonPress()}>
+          <Text style={styles.darkButtonText}>Continue with Apple</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.whiteButton} onPress={() => onAppleButtonPress()}>
+          <Text style={styles.whiteButtonText}>Continue with Apple</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.whiteButton} onPress={() =>onAppleButtonPress()}>
+          <Text style={styles.whiteButtonText}>Continue with Apple</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.darkButton} onPress={() => onAppleButtonPress()}>
+          <Text style={styles.darkButtonText}>Continue with Apple</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
+};
+async function onAppleButtonPress() {
+  
+  console.log("Button Pressed");
+
+    try {
+      if (appleAuth.isSupported) {
+        // Proceed with Apple Authentication
+        await appleAuth.performRequest({
+          requestedOperation: appleAuth.Operation.LOGIN,
+          requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+        });
+      } else {
+        console.warn('Apple Sign-In is not supported on this device.');
+      }
+    } catch (error) {
+      console.log("onAppleButtonPress Error: ", error);
+    }
+
+
 }
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  container: {
+    flex: 1,
   },
-  sectionTitle: {
+  background: {
+    flex: 1,
+    backgroundColor: '#c88bcc',
+    alignItems: 'center',
+    paddingTop: 50, 
+    justifyContent: "center"
+    
+  },
+  text: {
     fontSize: 24,
-    fontWeight: '600',
+    color: 'white', 
+    marginBottom: 15,
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+  whiteButton:{
+    backgroundColor:'white',
+    padding: 15,
+    marginBottom: 15,
+    borderRadius: 10
   },
-  highlight: {
-    fontWeight: '700',
+  darkButton:{
+    backgroundColor:'black',
+    padding: 15,
+    marginBottom: 15,
+    borderRadius: 10
   },
+  whiteButtonText: {
+    color: "black"
+  },
+  darkButtonText: {
+    color: "white"
+  }
 });
 
 export default App;
+

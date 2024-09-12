@@ -1,4 +1,4 @@
-package com.ziva
+package com.zivaone.ring.app.dev
 
 import android.app.Application
 import com.facebook.react.PackageList

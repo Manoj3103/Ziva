@@ -1,4 +1,4 @@
-package com.ziva
+package com.zivaone.ring.app.dev
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
